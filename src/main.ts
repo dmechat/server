@@ -17,8 +17,8 @@ async function bootstrap() {
   SwaggerModule.setup("api", app, document);
 
   app.use(helmet());
-  app.use(csurf())
+  // app.use(csurf());
   app.enableCors(); // TODO: Fix this. CORS is enabled for all origins
-  await app.listen(3000);
+  await app.listen(process.env.PORT || 8080);
 }
 bootstrap();
