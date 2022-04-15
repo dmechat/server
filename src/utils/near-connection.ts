@@ -15,6 +15,8 @@ type ChangeMethodArgs = {
 
 export type GuestContract = Contract & {
     add_guest: (args: ChangeMethodArgs & { args: { account_id, public_key } }) => Promise<string>;
+    get_guest: ({ public_key }) => Promise<string>;
+
 }
 
 export function loadStoredAccountCredentials(): StoredAccountCredentials {

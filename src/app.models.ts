@@ -1,6 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 
-export class SignedRequest{
+export class SignedRequest {
     @ApiProperty()
     signature: string;
 
@@ -13,13 +13,13 @@ export class SignedRequest{
     publicKey: string;
 }
 
-
+console.warn("***** signedMessage must be include a nonce. The nonce must follow a spec****");
 export class RegisterGuestAccountRequest extends SignedRequest {
-    // decoded signedMessage must be { "accountId": "account.guests.dmechat.testnet" }
+    // decoded signedMessage must be { "accountId": "account.guests.dmechat.testnet", "nonce": number }
 }
 
 export class LoginAccountRequest extends SignedRequest {
-    // decoded signedMessage must be { "accountId": "account.guests.dmechat.testnet" }
+    // decoded signedMessage must be { "accountId": "account.guests.dmechat.testnet", "nonce": number }
 }
 
 export class RegisterGuestAccountResponse {
@@ -29,15 +29,5 @@ export class RegisterGuestAccountResponse {
 
 export class LoginAccountResponse {
     @ApiProperty()
-    refreshToken: string;
-    @ApiProperty()
-    displayName: string;
-    @ApiProperty()
-    email: string;
-    @ApiProperty()
-    emailVerified: boolean;
-    @ApiProperty()
-    uid: string;
-    @ApiProperty()
-    idToken: string;
+    signInToken: string;
 }

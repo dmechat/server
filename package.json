@@ -27,6 +27,7 @@
     "@nestjs/platform-express": "^8.0.0",
     "@nestjs/swagger": "^5.2.1",
     "csurf": "^1.11.0",
+    "firebase-admin": "^10.0.2",
     "helmet": "^5.0.2",
     "near-api-js": "^0.44.2",
     "near-seed-phrase": "^0.2.0",
