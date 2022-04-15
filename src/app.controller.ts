@@ -19,10 +19,10 @@ export class AppController {
   @ApiResponse({ status: 403, description: 'Forbidden.' })
   @ApiResponse({ status: 404, description: 'Bad request.' })
   @ApiResponse({ status: 201, description: 'Account registered.', type: RegisterGuestAccountResponse })
-  async registerGuestAccount(@Body() payload: RegisterGuestAccountRequest): Promise<string> {
+  async registerGuestAccount(@Body() payload: RegisterGuestAccountRequest): Promise<RegisterGuestAccountResponse> {
     this.logger.verbose(payload);
     const result = await registerGuestAccountHandler(payload, this.logger);
-    return result.addGuestResult;
+    return {accountId: result.verifyResult.originalMessage.accountId};
   }
 
   @Post("login-guest")
