@@ -5,7 +5,7 @@ import { AppService, FirebaseService } from './app.service';
 import loginGuestHandler from './usecases/loginGuest';
 import registerGuestAccountHandler from './usecases/registerGuestAccount';
 
-@ApiTags("api")
+@ApiTags("dmechat")
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService, private readonly logger: Logger, private readonly firebaseService: FirebaseService) {
@@ -32,6 +32,7 @@ export class AppController {
   @ApiOperation({ operationId: "loginGuest", summary: 'Allows guests login with their secret/public keys and receive a firebase auth token in return' })
   @ApiResponse({ status: 403, description: 'Forbidden.' })
   @ApiResponse({ status: 404, description: 'Bad request.' })
+  @ApiResponse({ status: 201, description: 'Account registered.', type: LoginAccountResponse })
   async loginGuest(@Body() payload: LoginAccountRequest): Promise<LoginAccountResponse> {
     this.logger.verbose(payload);
     return await loginGuestHandler(payload, this.logger);
