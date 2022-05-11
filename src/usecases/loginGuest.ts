@@ -19,7 +19,7 @@ export default async function loginGuest(payload: LoginAccountRequest, logger: L
 
     // generate and send back sign-in token
     return {
-        signInToken: await FirebaseService.instance.auth().createCustomToken(guestAccountId)
+        signInToken: await FirebaseService.instance.auth().createCustomToken(guestAccountId, { "publicKey": payload.publicKey })
     };
 }
 
