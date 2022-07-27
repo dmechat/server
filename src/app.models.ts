@@ -31,3 +31,10 @@ export class LoginAccountResponse {
     @ApiProperty()
     signInToken: string;
 }
+
+export class User { 
+    @ApiProperty()
+    accountName: string;
+    @ApiProperty()
+    publicKey: string;
+}

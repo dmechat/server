@@ -72,8 +72,18 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 
 Nest is [MIT licensed](LICENSE).
 
+# Deploy stacks
+```
+cd .cicd
+AWS_DEFAULT_PROFILE=dmechat-admin npm run cdk -- deploy DatabaseStack-$ENVIRONMENT
+AWS_DEFAULT_PROFILE=dmechat-admin npm run cdk -- deploy RepositoryStack-$ENVIRONMENT
+AWS_DEFAULT_PROFILE=dmechat-admin npm run cdk -- deploy ApiStack-$ENVIRONMENT
+```
 
-# Deploy to Heroku
+# Build and push image to AWS Repository
+ENVIRONMENT=testnet AWS_DEFAULT_PROFILE=dmechat-admin sh deploy-docker.sh
+
+# Deploy to Heroku (deprecated)
 ```
 heroku login
 git push heroku main
