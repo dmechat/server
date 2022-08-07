@@ -10,17 +10,13 @@ export class AuthService {
 
     }
 
-    verifyToken(token: string): Promise<DecodedIdToken> {
-        return new Promise((resolve, reject) => {
-            FirebaseService.instance.auth().verifyIdToken(token)
-                .then(res => {
-                    this.logger.debug(" Resolved");
-                    resolve(res);
-                })
-                .catch(err => {
-                    this.logger.error(err);
-                    reject(new Failure(err.message, AUTHENTICATION_FAILURE))
-                });
-        });
+    async verifyToken(token: string): Promise<DecodedIdToken> {
+        try{
+            return await FirebaseService.instance.auth().verifyIdToken(token)
+        }
+        catch(error){
+            this.logger.error("verifyToken.error", error);
+            throw new Failure(error.message, AUTHENTICATION_FAILURE);
+        }
     }
 }
