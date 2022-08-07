@@ -16,6 +16,7 @@ async function setupApp(app: INestApplication) {
     .setTitle("dmechat")
     .setDescription("Server for dmechat")
     .setVersion("0.0.1")
+    .addSecurity("ID_TOKEN", { type: "apiKey", in: "header", name: "Authorization" })
     .build();
 
   const document = SwaggerModule.createDocument(app, config);

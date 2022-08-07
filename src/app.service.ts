@@ -1,5 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import * as admin from 'firebase-admin';
+import { FirebaseApp, initializeApp } from "firebase/app"
 
 @Injectable()
 export class AppService {
@@ -11,6 +12,7 @@ export class AppService {
 @Injectable()
 export class FirebaseService {
   static instance: admin.app.App;
+  static firebase: FirebaseApp;
   constructor(private readonly logger: Logger) {
 
   }
@@ -26,6 +28,16 @@ export class FirebaseService {
         privateKey: serviceAccount.private_key.replace(/\\n/g, '\n')
       }),
       databaseURL: process.env.FIREBASE_DATABASE_URL
+    });
+
+    FirebaseService.firebase = initializeApp({
+      databaseURL: process.env.FIREBASE_DATABASE_URL,
+      apiKey: "AIzaSyBwxYR8mCIlBcv38AUjY-WJOP0PR8davdA",
+      authDomain: "dmechat-testnet.firebaseapp.com",
+      projectId: "dmechat-testnet",
+      storageBucket: "dmechat-testnet.appspot.com",
+      messagingSenderId: "663814795413",
+      appId: "1:663814795413:web:fc21819c28f1fcdb24eb9c"
     });
   }
 }

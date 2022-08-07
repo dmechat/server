@@ -1,7 +1,7 @@
 import { Logger } from "@nestjs/common";
 import { Contract } from "near-api-js";
-import { LoginAccountRequest, LoginAccountResponse } from "src/app.models";
 import { FirebaseService } from "src/app.service";
+import { LoginAccountRequest, LoginAccountResponse } from "src/models/app.models";
 import { loadStoredAccountCredentials, getAccount, GuestContract, GAS } from "src/utils/near-connection";
 import { verifySignedMessage } from "src/utils/verifySignedMessage";
 

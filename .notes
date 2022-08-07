@@ -1,0 +1,29 @@
+Firebase - auth
+AWS - hosting website (aws amplify), apis (api-gateway), dynamodb - partitionkey, and sortkey
+
+Database
+Chat
+    Messages
+
+
+
+========================================================
+
+PartitionKey,   SortKey,                Record (JSON) 
+Chats,          Chat#01,                {} *
+Chats,          Chat#Id,                {}
+Chats,          Chat#Id,                {}
+Chats,          Chat#Id,                {}
+Chats,          Chat#Id,                {}
+
+Chat#Id,        Message#KSUID1          {}
+Chat#Id,        Message#KSUID2          {}
+Chat#Id,        Message#KSUID3          {}
+Chat#Id,        Message#KSUID4          {}
+Chat#Id,        Settings,               {}
+
+
+User#Id,        Chat#01,                {} *
+User#Id,        Chat#Id,                {}
+
+

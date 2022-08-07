@@ -1,7 +1,7 @@
 import { Logger } from "@nestjs/common";
 import { retry } from "rxjs";
-import { User } from "src/app.models";
 import { FirebaseService } from "src/app.service";
+import { User } from "src/models/app.models";
 
 
 export default async function listAvailableUsers(logger: Logger): Promise<User[]> {

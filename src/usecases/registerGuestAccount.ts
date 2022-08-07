@@ -1,8 +1,8 @@
-import { RegisterGuestAccountRequest } from "src/app.models";
 import { Account, Connection, Contract } from "near-api-js";
 import { GAS, getAccount, GuestContract, loadStoredAccountCredentials } from "src/utils/near-connection";
 import { Logger } from "@nestjs/common";
 import { verifySignedMessage } from "src/utils/verifySignedMessage";
+import { RegisterGuestAccountRequest } from "src/models/app.models";
 
 export default async function registerGuestAccount(payload: RegisterGuestAccountRequest, logger: Logger) {
     // verify message

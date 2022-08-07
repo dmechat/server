@@ -1,0 +1,5 @@
+JOI - schema -- PartitionKey and SortKey need to be excluded from the output
+
+general Error handler - Failures
+
+ttl on the messages so they are deleted automagically by dynamodb
