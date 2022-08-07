@@ -56,7 +56,7 @@ export class Chat extends DbRecord {
     }
 
     static async create(_model: Chat): Promise<Chat> {
-        const model = ChatSchema.validate(new Chat(_model)).value;
+        const model: Chat = Joi.attempt(new Chat(_model), ChatSchema);
         const { client, TableName } = AwsDocumentClient();
         const result = await client.transactWrite({
             TransactItems: [
@@ -96,7 +96,7 @@ export class Chat extends DbRecord {
     }
 
     static async update(_model: Chat): Promise<Chat> {
-        const model = ChatSchema.validate(new Chat(_model)).value;
+        const model: Chat = Joi.attempt(new Chat(_model), ChatSchema);
         const { client, TableName } = AwsDocumentClient();
         const result = await client.transactWrite({
             TransactItems: [
