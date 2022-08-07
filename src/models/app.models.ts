@@ -61,8 +61,8 @@ export class Failure extends Error {
         else if (error.message && error.message.includes("NotFound")) {
             return new Failure(error.message, NOT_FOUND_FAILURE);
         }
-        else if (error.message && error.message.includes(VALIDATION_FAILURE)) {
-            return new Failure(error.message, BAD_REQUEST_FAILURE);
+        else if (error.message && error.message.includes("ValidationError")) {
+            return new Failure(error.message, VALIDATION_FAILURE);
         }
         else if (error.message && error.message.includes("verifyIdToken")) {
             return new Failure("IdToken is missing in the headers", NOT_AUTHORIZED_FAILURE);

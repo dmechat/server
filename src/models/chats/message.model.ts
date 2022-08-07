@@ -5,6 +5,9 @@ import { DbRecord, dbRecordSchema } from "../database.models";
 import * as Joi from "joi";
 import { StripProps } from "src/utils/helpers";
 
+// TODO: use dayjs or moment to determine the duration
+export const EXPIRATION_TIME = 604800; // 7 days
+
 type MessageType = "text" | "audio" | "file" | "video";
 const MESSAGE_TYPE_OPTIONS = ["text", "audio", "file", "video"];
 
@@ -20,9 +23,11 @@ const createMessageSchema = {
 
 export const CreateMessageSchema = Joi.object<Message>(createMessageSchema);
 
-export const UpdateMessageSchema= Joi.object<Message>({
+export const UpdateMessageSchema = Joi.object<Message>({
     ...createMessageSchema,
-    id: Joi.string().required()
+    id: Joi.string().required(),
+    ttl: Joi.number().required(),
+    edited: Joi.boolean().required().default(true)
 });
 
 export const MessageSchema = Joi.object<Message>({
@@ -30,7 +35,9 @@ export const MessageSchema = Joi.object<Message>({
     ...StripProps(dbRecordSchema, ["PartitionKey", "SortKey"]),
     PartitionKey: Joi.string().required().pattern(new RegExp(`^Chat#`)),
     SortKey: Joi.string().required().pattern(new RegExp(`^Message#`)),
-    id: Joi.string().required()
+    id: Joi.string().required(),
+    ttl: Joi.number().required(),
+    edited: Joi.boolean().required().default(false)
 });
 
 export const ApiMessageSchema = Joi.object<Message>({
@@ -62,6 +69,8 @@ export class Message extends DbRecord {
     @ApiProperty()
     contents: MessageContents;
 
+    ttl: number;
+
     constructor(input: Message) {
         super(input);
 
@@ -75,10 +84,11 @@ export class Message extends DbRecord {
         this.edited = input.edited;
         this.type = input.type;
         this.contents = input.contents;
+        this.ttl = input.ttl;
     }
 
     static async save(message: Message): Promise<Message> {
-        const model = MessageSchema.validate(new Message(message)).value;
+        const model: Message = Joi.attempt(new Message(message), MessageSchema);
         const { client, TableName } = AwsDocumentClient();
         const result = await client.transactWrite({
             TransactItems: [

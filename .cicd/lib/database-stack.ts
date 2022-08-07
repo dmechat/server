@@ -15,6 +15,7 @@ export class DatabaseStack extends Stack {
         sortKey: { type: AttributeType.STRING, name: "SortKey" },
         tableName: `data_${environment}`,
         billingMode: BillingMode.PAY_PER_REQUEST,
+        timeToLiveAttribute: "ttl",
         pointInTimeRecovery: true,
     });
 

@@ -1,5 +1,4 @@
-import { keys } from "lodash";
-import { dbRecordSchema } from "src/models/database.models";
+import { keys, merge } from "lodash";
 
 export function StripProps(value: any, props: string[]) {
     return keys(value)
@@ -9,5 +8,5 @@ export function StripProps(value: any, props: string[]) {
             o[key] = value[key];
             return o;
         })
-        .reduce((a, b) => Object.apply(a, b), {});
+        .reduce((a, b) => merge(a, b), {});
 }

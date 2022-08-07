@@ -2,7 +2,7 @@ import { Logger } from "@nestjs/common";
 import { BAD_REQUEST_FAILURE, Failure, NOT_AUTHORIZED_FAILURE, NOT_FOUND_FAILURE } from "src/models/app.models";
 import { AuthSession } from "src/models/auth.models";
 import { Chat } from "src/models/chats/chat.model";
-import { Message } from "src/models/chats/message.model";
+import { EXPIRATION_TIME, Message } from "src/models/chats/message.model";
 
 export default function updateMessage(logger: Logger) {
     return async (
@@ -38,6 +38,7 @@ export default function updateMessage(logger: Logger) {
         message.updatedAt = new Date().getTime();
         message.updatedBy = session.decodedToken.uid;
         message.contents = payload.contents;
+        // message.ttl = Math.floor((Date.now() + EXPIRATION_TIME) / 1000);
 
         const savedMessage = await Message.save(message);
 

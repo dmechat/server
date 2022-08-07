@@ -2,7 +2,7 @@ import { Logger } from "@nestjs/common";
 import { BAD_REQUEST_FAILURE, Failure, NOT_AUTHORIZED_FAILURE, NOT_FOUND_FAILURE } from "src/models/app.models";
 import { AuthSession } from "src/models/auth.models";
 import { Chat } from "src/models/chats/chat.model";
-import { Message } from "src/models/chats/message.model";
+import { EXPIRATION_TIME, Message } from "src/models/chats/message.model";
 
 const ksuid = require("ksuid");
 
@@ -35,9 +35,8 @@ export default function sendMessage(logger: Logger) {
         payload.createdAt = new Date().getTime();
         payload.createdBy = session.decodedToken.uid;
         payload.edited = false;
-
+        payload.ttl = Math.floor((Date.now() + EXPIRATION_TIME) / 1000);
         const message = await Message.save(payload);
-        logger.debug("saved message", { message });
         return message;
     }
 }

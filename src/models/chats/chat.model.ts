@@ -89,7 +89,6 @@ export class Chat extends DbRecord {
             },
             TableName,
         }).promise();
-        console.log("result", result);
         if (!result.Item) {
             return null;
         }

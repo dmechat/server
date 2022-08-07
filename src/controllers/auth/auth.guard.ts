@@ -13,11 +13,11 @@ export class AuthGuard implements CanActivate {
     }
     async canActivate(context: ExecutionContext): Promise<boolean> {
         const request = context.switchToHttp().getRequest();
-        this.logger.debug("request.headers", { headers: request.headers })
+        // this.logger.debug("request.headers", { headers: request.headers })
         const token = request.headers.authorization || request.headers.idtoken as string;
-        this.logger.debug("token", { token })
+        // this.logger.debug("token", { token })
         const decodedToken = await this.authService.verifyToken(token);
-        this.logger.debug("decodedToken", { decodedToken });
+        // this.logger.debug("decodedToken", { decodedToken });
         (request as any).session = {
             ...(request as any).session,
             decodedToken, token
