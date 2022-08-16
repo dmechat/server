@@ -18,7 +18,8 @@ const createMessageSchema = {
     contents: Joi.object<MessageContents>({
         path: Joi.string(),
         text: Joi.string()
-    })
+    }),
+    edited: Joi.boolean().required().default(false)
 };
 
 export const CreateMessageSchema = Joi.object<Message>(createMessageSchema);
@@ -36,8 +37,7 @@ export const MessageSchema = Joi.object<Message>({
     PartitionKey: Joi.string().required().pattern(new RegExp(`^Chat#`)),
     SortKey: Joi.string().required().pattern(new RegExp(`^Message#`)),
     id: Joi.string().required(),
-    ttl: Joi.number().required(),
-    edited: Joi.boolean().required().default(false)
+    ttl: Joi.number().required()
 });
 
 export const ApiMessageSchema = Joi.object<Message>({
