@@ -7,6 +7,7 @@ import * as Joi from "joi";
 import { JsonRpcProvider } from "near-api-js/lib/providers";
 import { keys } from "lodash";
 import { StripProps } from "src/utils/helpers";
+import { DocumentClient } from "aws-sdk/clients/dynamodb";
 
 type ChatType = "self" | "private" | "group";
 const CHAT_TYPE_OPTIONS = ["self", "private", "group"];
@@ -32,6 +33,8 @@ export const ApiChatSchema = Joi.object<Chat>({
     ...StripProps(dbRecordSchema, ["PartitionKey", "SortKey"]),
     id: Joi.string().required()
 })
+
+export const ListOfApiChatSchema = Joi.array().items(ApiChatSchema);
 
 export class Chat extends DbRecord {
     @ApiProperty()
@@ -127,5 +130,20 @@ export class Chat extends DbRecord {
             ]
         }).promise();
         return model;
+    }
+
+    static async listUserChats(uid: string): Promise<Chat[]> {
+        const { client, TableName } = AwsDocumentClient();
+        let dbQuery = {
+            TableName,
+            KeyConditionExpression: `PartitionKey = :pkey and begins_with(SortKey, :skey)`,
+            ExpressionAttributeValues: {
+                ':pkey': `UserId#${uid}`,
+                ':skey': `Chat#`,
+            },
+        } as DocumentClient.QueryInput;
+        
+        const result = await client.query(dbQuery).promise();
+        return result.Items.map(item => new Chat(item as Chat));
     }
 }

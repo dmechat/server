@@ -83,8 +83,6 @@ AWS_DEFAULT_PROFILE=dmechat-admin npm run cdk -- deploy ApiStack-$ENVIRONMENT
 # Build and push image to AWS Repository
 ENVIRONMENT=testnet AWS_DEFAULT_PROFILE=dmechat-admin sh deploy-docker.sh
 
-# Deploy to Heroku (deprecated)
-```
-heroku login
-git push heroku main
-```
+# Update lambda code
+1. Build and push the docker image
+2. Build and push the stack
