@@ -1,10 +1,6 @@
-import { Body, Controller, Get, Logger, Post } from '@nestjs/common';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { LoginAccountRequest, LoginAccountResponse, RegisterGuestAccountRequest, RegisterGuestAccountResponse, User } from './models/app.models';
+import { Controller, Get, Logger } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { AppService, FirebaseService } from './app.service';
-import loginGuestHandler from './usecases/loginGuest';
-import registerGuestAccountHandler from './usecases/registerGuestAccount';
-import listAvailableUsersHandler from "./usecases/listAvailableUsers";
 
 @ApiTags("app")
 @Controller()

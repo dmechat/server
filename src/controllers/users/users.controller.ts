@@ -6,11 +6,11 @@ import { Chat, ApiChatSchema, ListOfApiChatSchema } from "src/models/chats/chat.
 import { AuthGuard } from "../auth/auth.guard";
 import listChatsUsecase from "./usecases/listChats";
 
-@ApiTags("chats")
-@Controller("chats")
+@ApiTags("users")
+@Controller("users")
 @UseGuards(AuthGuard)
 @ApiSecurity("ID_TOKEN")
-export class ChatsController {
+export class UsersController {
     constructor(private readonly logger: Logger) {
 
     }
@@ -38,7 +38,7 @@ export class ChatsController {
     @ApiParam({ name: "uid", type: String })
     @UseInterceptors(new JoiResponseTransformInterceptor(ListOfApiChatSchema))
     async listChats(@Param() params, @Session() session: AuthSession): Promise<Chat[]> {
-        return await listChatsUsecase(this.logger)(params.id, session);
+        return await listChatsUsecase(this.logger)(params.uid, session);
     }
 
 }

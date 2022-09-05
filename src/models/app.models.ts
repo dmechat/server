@@ -32,6 +32,26 @@ export class LoginAccountResponse {
     signInToken: string;
 }
 
+export class CreateUserRequest {
+    @ApiProperty()
+    username: string;
+    @ApiProperty()
+    password: string;
+    @ApiProperty()
+    initialDeviceDisplayName: string;
+}
+
+export class CreateUserResponse {
+    @ApiProperty()
+    userId: string;
+    @ApiProperty()
+    homeServer: string;
+    @ApiProperty()
+    accessToken: string;
+    @ApiProperty()
+    deviceId: string;
+}
+
 export class User {
     @ApiProperty()
     accountName: string;

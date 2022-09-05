@@ -25,13 +25,15 @@ const ChatSchema = Joi.object<Chat>({
     ...dbRecordSchema,
     PartitionKey: Joi.string().required().pattern(new RegExp(`Chats`)),
     SortKey: Joi.string().required().pattern(new RegExp(`^Chat#`)),
-    id: Joi.string().required()
+    id: Joi.string().required(),
+    name: Joi.string().required(),
 });
 
 export const ApiChatSchema = Joi.object<Chat>({
     ...createChatSchema,
     ...StripProps(dbRecordSchema, ["PartitionKey", "SortKey"]),
-    id: Joi.string().required()
+    id: Joi.string().required(),
+    name: Joi.string().required(),
 })
 
 export const ListOfApiChatSchema = Joi.array().items(ApiChatSchema);
@@ -45,6 +47,8 @@ export class Chat extends DbRecord {
     admins: string[];
     @ApiProperty()
     participants: string[];
+    @ApiProperty()
+    name: string;
 
     constructor(input: Chat) {
         super(input);
@@ -56,6 +60,7 @@ export class Chat extends DbRecord {
         this.id = input.id;
         this.admins = input.admins;
         this.participants = input.participants;
+        this.name = input.name;
     }
 
     static async create(_model: Chat): Promise<Chat> {
@@ -142,7 +147,6 @@ export class Chat extends DbRecord {
                 ':skey': `Chat#`,
             },
         } as DocumentClient.QueryInput;
-        
         const result = await client.query(dbQuery).promise();
         return result.Items.map(item => new Chat(item as Chat));
     }

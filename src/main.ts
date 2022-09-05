@@ -2,7 +2,6 @@ import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import helmet from 'helmet';
 import { AppModule } from './app.module';
-import * as csurf from "csurf";
 import * as express from 'express';
 import { INestApplication } from '@nestjs/common';
 import { ExpressAdapter } from '@nestjs/platform-express';

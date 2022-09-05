@@ -81,7 +81,7 @@ AWS_DEFAULT_PROFILE=dmechat-admin npm run cdk -- deploy ApiStack-$ENVIRONMENT
 ```
 
 # Build and push image to AWS Repository
-ENVIRONMENT=testnet AWS_DEFAULT_PROFILE=dmechat-admin sh deploy-docker.sh
+ENVIRONMENT=testnet AWS_DEFAULT_PROFILE=dmechat-admin AWS_PROFILE=dmechat-admin sh deploy-docker.sh
 
 # Update lambda code
 1. Build and push the docker image
